@@ -44,8 +44,8 @@ const Register = () => {
                     // if account created succesfull, alert message generated
                     alert("Successfully created your account");
 
-                    // redirects profile to URL
-                    history.push("/profile")
+                    // redirects forum to URL
+                    history.push("/forum")
                     // error message
             }catch(e){
                 // error message created by default by firebase

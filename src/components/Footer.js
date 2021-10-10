@@ -9,11 +9,12 @@ const Footer = () => {
             <div className="row">
                 <div className="col-md-12 col-lg-4">
                     <div className="dk-footer-box-info">
-                        <a href="index.html" className="footer-logo">
+                    <Link to="/" className="footer-logo">
                           <h3>Discussion</h3>
-                        </a>
+                        </Link>
                         <p className="footer-info-text">
-                           Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.
+                        To get the most out of your online discussion board posts, you need to actually have a
+conversation. When you’re posting, think about what you’re saying: why do you think this way?
                         </p>
                         <div className="footer-social-link">
                             <h3>Follow us</h3>
@@ -71,8 +72,8 @@ const Footer = () => {
                                     <h3>Subscribe</h3>
                                     <span className="animate-border border-black"></span>
                                 </div>
-                                <p>
-                                Reference site about Lorem Ipsum, giving information on its origins, as well.</p>
+                            <h3>Sign Up For Our Newsletter</h3>
+                                <p> Signup for the latest Discussion news and expert advice.</p>
                                 <form action="/">
                                     <div className="form-row">
                                         <div className="col dk-footer-form">
