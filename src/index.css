@@ -6,6 +6,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.row.footer-modal {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+.row.footer-modal button {margin: 5px; }
+.show{display: block;}
 p.error {
   text-align: left;
   color: #f00;

@@ -1,9 +1,34 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react';
+import { collection, getDocs, getFirestore, limit, orderBy, query} from '@firebase/firestore';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 const Home = () => {
+    const[forumList,setForumList] = useState([]);
+    const monthName = ['Jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec'];
+    const dateShow = (time)=>{
+        let date = new Date(time * 1000);
+        return date.getDate()+" "+monthName[date.getMonth()]+", "+date.getFullYear();
+    }
+    const db = getFirestore();
+    useEffect(() => {
+        const getForumList = async()=>{
+                const totalForum = collection(db,"forum/default/discussion");
+                const q = query(totalForum,orderBy("timestamp","desc"),limit(50));
+                const itemList = await getDocs(q);
+                let results = [];
+                itemList.forEach((doc)=>{
+                    let id = doc.id;
+                let data = doc.data();
+                data['id'] = id;
+                    results.push(doc.data());
+                })
+                setForumList(results);
+                return results;
+        }
+        getForumList()
+    }, [setForumList,db])
     return (
     <>
     <Navbar/>
@@ -24,54 +49,15 @@ const Home = () => {
           </thead>
           {/* Table forum data from bootsnip and will integrate from firebase */}
           <tbody>
-        <tr>
-            <td><Link to="/forums/1"> Washington DC</Link><br/><b><Icon name="user"/> By : Debra Shelby</b><br/><Icon name="calendar alternate"/> 21 Sep, 2021</td>
-            <td >1</td>
+        {forumList && forumList.map((data,index)=>(
+        <tr key={index} className={((index+1)%2) === 0 ? '':'active' }>
+            <td><Link to={`/forums/${data.id}`}> {data.title}</Link><br/><b><Icon name="user"/> By : {data.displayName}</b><br/><Icon name="calendar alternate"/> {dateShow(data.timestamp.seconds)}</td>
+            <td >{data.totalComment}</td>
             <td>9 hours, 1 minute ago</td>
             <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: David</td>
         </tr>
-        <tr className="active">
-            <td><Link to="/forums/1"> NSTP Annual Federal Tax Refresher Course</Link><br/><b><Icon name="user"/> By : Debra Shelby</b><br/><Icon name="calendar alternate"/> 21 Sep, 2021</td>
-            <td >1</td>
-            <td>2 hours, 11 minute ago</td>
-            <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: Honey</td>
-        </tr>
-        <tr>
-            <td><Link to="/forums/1"> Washington DC</Link><br/><b><Icon name="user"/> By : Debra Shelby</b><br/><Icon name="calendar alternate"/> 21 Sep, 2021</td>
-            <td >1</td>
-            <td>9 hours, 1 minute ago</td>
-            <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: David</td>
-        </tr>
-        <tr className="active">
-            <td><Link to="/forums/1"> NSTP Annual Federal Tax Refresher Course</Link><br/><b><Icon name="user"/> By : Debra Shelby</b><br/><Icon name="calendar alternate"/> 21 Sep, 2021</td>
-            <td >21</td>
-            <td>2 hours, 11 minute ago</td>
-            <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: Honey</td>
-        </tr>
-        <tr>
-            <td><Link to="/forums/1"> Washington DC</Link><br/><b><Icon name="user"/> By : Debra Shelby</b><br/><Icon name="calendar alternate"/> 21 Sep, 2021</td>
-            <td >12</td>
-            <td>9 hours, 1 minute ago</td>
-            <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: David</td>
-        </tr>
-        <tr className="active">
-            <td><Link to="/forums/1"> NSTP Annual Federal Tax Refresher Course</Link><br/><b><Icon name="user"/> By : Debra Shelby</b><br/><Icon name="calendar alternate"/> 21 Sep, 2021</td>
-            <td >14</td>
-            <td>2 hours, 11 minute ago</td>
-            <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: Honey</td>
-        </tr>
-        <tr>
-            <td><Link to="/forums/1"> Washington DC</Link><br/><b><Icon name="user"/> By : Debra Shelby</b><br/><Icon name="calendar alternate"/> 21 Sep, 2021</td>
-            <td >10</td>
-            <td>9 hours, 1 minute ago</td>
-            <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: David</td>
-        </tr>
-        <tr className="active">
-            <td><Link to="/forums/1"> NSTP Annual Federal Tax Refresher Course</Link><br/><b><Icon name="user"/> By : Debra Shelby</b><br/><Icon name="calendar alternate"/> 21 Sep, 2021</td>
-            <td >9</td>
-            <td>2 hours, 11 minute ago</td>
-            <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: Honey</td>
-        </tr>      
+        ))}
+    
             </tbody>
             <tfoot>
                 <tr>

@@ -28,6 +28,8 @@ const AddForum = () => {
                         uid:uid,
                         title:title.value,
                         description:description.value,
+                        totalComment:0,
+                        displayName:user.displayName,
                         timestamp:serverTimestamp()
                     });
                     alert("Succesfully added your form")

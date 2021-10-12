@@ -6,7 +6,7 @@ import {getAuth,signOut} from "firebase/auth";
 const Navbar = () => {
     const [open,setOpen] = useState(false);
     const {isAuthenticated} = useAuthState();
-    
+    const{user} = useAuthState();
     return (
         <>
         <div id="flipkart-navbar">
@@ -14,6 +14,7 @@ const Navbar = () => {
         <div className="row row1">
             <div className="col-md-12">
                 <ul className="largenav pull-right">
+                {isAuthenticated === true && <li className="upper-links">Welcome ,({user.displayName})</li> }
                 <li className="upper-links"><Link className="links" to="/"><Icon name="home"/> Home</Link></li>
                 {isAuthenticated === false ? 
                 <><li className="upper-links"><Link className="links" to="/login"><Icon name="lock"/>Login</Link></li>
