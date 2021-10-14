@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {Link} from "react-router-dom";
+import {Link,useHistory} from "react-router-dom";
 import { Icon } from 'semantic-ui-react';
 import { useAuthState } from '../firebase';
 import {getAuth,signOut} from "firebase/auth";
@@ -7,6 +7,7 @@ const Navbar = () => {
     const [open,setOpen] = useState(false);
     const {isAuthenticated} = useAuthState();
     const{user} = useAuthState();
+    const history = useHistory();
     return (
         <>
         <div id="flipkart-navbar">
@@ -28,8 +29,9 @@ const Navbar = () => {
         </div>
         <div className="row row2">
             <div className="col-md-4 header-logo">
-                <h2 ><span className="smallnav menu" onClick={()=>{setOpen(true)}}>☰ Discussion</span></h2>
-                <h1 ><span className="largenav">Discussion</span></h1>
+                <h2 ><span className="smallnav menu" onClick={()=>{setOpen(true)}}>☰ <b onClick={()=>{history.push("/")}}>Discussion</b></span></h2>
+            {/*     //added home page link on the discussion logo using history variable to take the the home page */}
+                <h1 ><span className="largenav" onClick={()=>{history.push("/")}}>Discussion</span></h1>
             </div>
             <div className="flipkart-navbar-search smallsearch col-sm-8 col-xs-11">
                 <div className="row">

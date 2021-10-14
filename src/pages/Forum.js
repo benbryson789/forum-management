@@ -61,6 +61,9 @@ const Forum = () => {
         // pringint document id
         console.log(documentIndex);
         // these are the dependency variables UseEffect
+        // setForumList is returning data from Firebase
+        // db is connecting the system with Firebase system
+        // docuementationIndex is rererence current document id
     }, [setForumList,db,documentIndex])
     //console.log(forumList)
     // deleting the document from firebase

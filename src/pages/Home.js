@@ -19,16 +19,24 @@ const Home = () => {
                 const itemList = await getDocs(q);
                 let results = [];
                 itemList.forEach((doc)=>{
+                    // passing document unique id in state variable
                     let id = doc.id;
+                    // getting datat from firebase document variable
                 let data = doc.data();
+                // merging datat and id with one variable
                 data['id'] = id;
-                    results.push(doc.data());
+                // pushing variable is react array
+                    results.push(data);
                 })
+                // passing array is setForumList state variable
                 setForumList(results);
                 return results;
         }
+        // async function calling get data from Firebasedatabase
         getForumList()
+        // dependency variable for useEffect
     }, [setForumList,db])
+    // console.log(forumList)
     return (
     <>
     <Navbar/>
@@ -49,8 +57,13 @@ const Home = () => {
           </thead>
           {/* Table forum data from bootsnip and will integrate from firebase */}
           <tbody>
+              {/* if both forumList have data then it will work */}
         {forumList && forumList.map((data,index)=>(
+            // checking if even or odd and then adding active 
+        // if 1 then active then if 0 then blank
         <tr key={index} className={((index+1)%2) === 0 ? '':'active' }>
+            {/* printing of title of forum name with author and posted date */}
+            {/* forums represents a link of app.js with document id */}
             <td><Link to={`/forums/${data.id}`}> {data.title}</Link><br/><b><Icon name="user"/> By : {data.displayName}</b><br/><Icon name="calendar alternate"/> {dateShow(data.timestamp.seconds)}</td>
             <td >{data.totalComment}</td>
             <td>9 hours, 1 minute ago</td>

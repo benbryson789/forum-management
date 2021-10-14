@@ -26,7 +26,11 @@ const EditForum = () => {
                     alert(error.message)
                 }
         }
+        // asynce function to get data from firebase
         getForum();
+        // setForumData is being place is useState
+        // parms is getting parameter data from url
+        // db is connecting to firebase database
     }, [setForumData,params,db]);
     // we are calling this function on triggering HTML update forum button 
     const handleSubmit = useCallback(async e=> {
@@ -48,6 +52,7 @@ const EditForum = () => {
                 alert(error.message);
             }
         },
+        // history is redirecting from one page to another
         [forumData,params,history,db]);
     return (
         <>
