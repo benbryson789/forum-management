@@ -11,6 +11,10 @@ const Home = () => {
         let date = new Date(time * 1000);
         return date.getDate()+" "+monthName[date.getMonth()]+", "+date.getFullYear();
     }
+    const dateTimeShow = (time)=>{
+        let date = new Date(time * 1000);
+        return date.getDate()+" "+monthName[date.getMonth()]+", "+date.getFullYear() +" "+ date.getHours() +":"+date.getMinutes()+":"+date.getSeconds();
+    }
     const db = getFirestore();
     useEffect(() => {
         const getForumList = async()=>{
@@ -65,9 +69,12 @@ const Home = () => {
             {/* printing of title of forum name with author and posted date */}
             {/* forums represents a link of app.js with document id */}
             <td><Link to={`/forums/${data.id}`}> {data.title}</Link><br/><b><Icon name="user"/> By : {data.displayName}</b><br/><Icon name="calendar alternate"/> {dateShow(data.timestamp.seconds)}</td>
+            {/* firebase data store */}
             <td >{data.totalComment}</td>
-            <td>9 hours, 1 minute ago</td>
-            <td><small>Wow amazing article</small><br/><Icon name="comment"/> By: David</td>
+            {/* checking if comment has been posted and then show data */}
+            {/* if comment length less than 0 it means never posted any comment and if greater than 0 it has comment */}
+            <td>{(Object.keys(data.comment).length !== 0) && <>{dateTimeShow(data.comment.timestamp.seconds)}</>}</td>
+            <td>{(Object.keys(data.comment).length !== 0) && <><small>{data.comment.title}</small><br/><Icon name="comment"/> By: {data.comment.name}</> }</td>
         </tr>
         ))}
     

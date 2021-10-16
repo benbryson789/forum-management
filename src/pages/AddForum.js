@@ -29,6 +29,7 @@ const AddForum = () => {
                         title:title.value,
                         description:description.value,
                         totalComment:0,
+                        comment:{},
                         displayName:user.displayName,
                         timestamp:serverTimestamp()
                     });
