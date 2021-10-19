@@ -1076,3 +1076,33 @@ article.fourms {
 	border-radius: 3px;
 }
 /* forum detail page ends here */
+
+/*Game css*/
+.gamepage img {
+  max-width: 100%;
+}
+
+.gamepage  .bgoverlay {
+  position: absolute;
+  bottom: 0px;
+  background: rgba(0,0,0,.5);
+  color: #fff;
+  padding: 10px;
+}
+
+.gamepage {
+  position: relative;
+  border: 1px solid #eee;
+}
+
+.gamepage  .bgoverlay  a {
+  text-align: center;
+  display: block;
+  max-width: 150px;
+  margin: 0 auto;
+  background: #ddd;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  color: #000;
+}
