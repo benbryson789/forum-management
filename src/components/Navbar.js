@@ -17,12 +17,15 @@ const Navbar = () => {
                 <ul className="largenav pull-right">
                 {isAuthenticated === true && <li className="upper-links">Welcome ,({user.displayName})</li> }
                 <li className="upper-links"><Link className="links" to="/"><Icon name="home"/> Home</Link></li>
-                <li className="upper-links"><Link className="links" to="/games"><Icon name="gamepad"/> Games</Link></li>
                 {isAuthenticated === false ? 
-                <><li className="upper-links"><Link className="links" to="/login"><Icon name="lock"/>Login</Link></li>
+                <>
+                <li className="upper-links"><Link className="links" to="/login"><Icon name="lock"/>Login</Link></li>
                 <li className="upper-links"><Link className="links" to="/register"><Icon name="user plus"/>Register</Link></li></>
                 :
-                <><li className="upper-links"><Link className="links" to="/profile"><Icon name="user"/>Profile</Link></li>
+                <>
+                <li className="upper-links"><Link className="links" to="/games"><Icon name="gamepad"/> Games</Link></li>
+                <li className="upper-links"><Link className="links" to="/leaderboard"><Icon name="clipboard list"/> Leaderboard</Link></li>
+                <li className="upper-links"><Link className="links" to="/profile"><Icon name="user"/>Profile</Link></li>
                 <li className="upper-links"><Link className="links" to="/" onClick={()=>signOut(getAuth())}><Icon name="unlock"/>Logout</Link></li></>
                 }
             </ul>
@@ -53,12 +56,15 @@ const Navbar = () => {
         <span className="closebtn" onClick={()=>{setOpen(false)}}>×</span>
     </div>
     <Link className="sidelinks" to="/"><Icon name="home"/> Home</Link>
-    <Link className="sidelinks" to="/games"><Icon name="gamepad"/> Games</Link>
     {isAuthenticated === false ? 
-    <><Link className="sidelinks" to="/login"><Icon name="lock"/>Login</Link>
+    <>
+    <Link className="sidelinks" to="/login"><Icon name="lock"/>Login</Link>
     <Link className="sidelinks" to="/register"><Icon name="user plus"/>Register</Link></>
     :
-    <><Link className="sidelinks" to="/profile"><Icon name="user"/>Profile</Link>
+    <>
+    <Link className="sidelinks" to="/games"><Icon name="gamepad"/> Games</Link>
+    <Link className="sidelinks" to="/leaderboard"><Icon name="clipboard list"/> Leaderboard</Link>
+    <Link className="sidelinks" to="/profile"><Icon name="user"/>Profile</Link>
     <Link className="sidelinks" to="/" onClick={()=>signOut(getAuth())}><Icon name="unlock"/>Logout</Link></>
     }
 </div>

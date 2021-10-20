@@ -17,7 +17,8 @@ import ForumDetail from './pages/ForumDetail';
 import {AuthContextProvider} from "./firebase";
 import Games from './pages/Games';
 import TetrisGame from './pages/TetrisGame';
-import Tetris from './components/tetris/Tetris';
+import Leaderboard from './pages/Leaderboard';
+
 function App() {
   return (
     <AuthContextProvider>
@@ -38,7 +39,8 @@ function App() {
           <Route exact path="/forum/:id/edit" component={EditForum}/>
           <Route exact path="/forums/:id" component={ForumDetail}/>
           <Route exact path="/games" component={Games}/>
-          <Route exact path="/tetris" component={Tetris}/>
+          <Route exact path="/tetris" component={TetrisGame}/>
+          <Route exact path="/leaderboard" component={Leaderboard}/>
         </Switch>
     </HashRouter>
     </AuthContextProvider>

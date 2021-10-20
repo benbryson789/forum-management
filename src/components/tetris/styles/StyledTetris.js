@@ -4,11 +4,12 @@ import bgImage from '../img/bg.png'
 
 // May need to adjust height here to work well with nav bar
 export const StyledTetrisWrapper = styled.div`
-  width: 100vw;
-  height: 97vh;
+width: 100%;
+    height: calc(100vh - 111px);
   background: url(${bgImage}) #000;
   background-size: cover;
   overflow: hidden;
+  min-height:660px;
 `
 
 export const StyledTetris = styled.div`

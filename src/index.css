@@ -1106,3 +1106,36 @@ article.fourms {
   border-radius: 4px;
   color: #000;
 }
+
+/*Leaderboard Score*/
+/*This is showint the leader borad layout in tabular format*/
+ul.tetrisLeaderBoard {
+  padding: 0;
+  margin: 15px auto;
+
+}
+ul.tetrisLeaderBoard li.headers {background: #dcdcdc;}
+ul.tetrisLeaderBoard li.headers span{font-weight: bold;}
+ul.tetrisLeaderBoard li {
+  margin: 5px;
+  background: #f3f3f3;
+  padding: 12px 0px;
+}
+ul.tetrisLeaderBoard li.bg-success label { background-color: #18652a;}
+ul.tetrisLeaderBoard li.bg-danger label { background-color: #a92d39;}
+ul.tetrisLeaderBoard li.bg-warning label { background-color: #caa22d;}
+ul.tetrisLeaderBoard li i.gamepad.icon {
+  height: 36px;
+  line-height: 36px;
+  font-size: 18px;
+}
+ul.tetrisLeaderBoard li label {
+  background-color: #dcd8d8;
+  height: 36px;
+  display: block;
+  width: 36px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 36px;
+  margin: 2px auto;
+}
