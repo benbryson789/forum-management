@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 
 import { createStage, checkCollision } from './files/gameHelpers'
 
@@ -15,6 +15,7 @@ import { useGameStatus } from './hooks/useGameStatus'
 import Stage from './Stage'
 import Display from './Display'
 import StartButton from './StartButton'
+import { addScoreonLeaderBoard } from './FirebaseLeaderboard'
 
 const Tetris = () => {
   const [ dropTime, setDropTime ] = useState(null)
@@ -42,7 +43,11 @@ const Tetris = () => {
     setRows(0)
     setLevel(0)
   }
-
+  // this function automatically calls end of the game or game over
+const endGame = ()=>{
+  // updates Leaderboard scores in firebase database
+    addScoreonLeaderBoard(score);
+}
   const drop = () => {
     // Increase level when player has cleared 10 rows
     if (rows > (level + 1) * 10) {
@@ -57,8 +62,10 @@ const Tetris = () => {
       // Game over
       if (player.pos.y < 1) {
         console.log('GAME OVER!!!')
-        setGameOver(true)
-        setDropTime(null)
+        setGameOver(true);
+        setDropTime(null);
+        // called endGame function 
+        endGame();
       }
       updatePlayerPos({ x: 0, y: 0, collided: true })
     }
@@ -98,6 +105,11 @@ const Tetris = () => {
     drop();
   }, dropTime)
 
+  useEffect(() => {
+  if(gameOver === true){
+    //alert("Game over and your score"+score);
+  }
+  }, [gameOver])
   return (
     <StyledTetrisWrapper
         role="button" 

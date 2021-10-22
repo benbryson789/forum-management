@@ -20,7 +20,7 @@ const HighestScore = () => {
                         {/* score value */}
                         <span className="col-md-3">10</span>
                     </li>
-                    <li key={0} className="row">
+                    <li key={2} className="row">
                         {/* increases by one each time thru loop */}
                         <span className="col-md-2">1</span>
                         {/* player name */}
@@ -28,7 +28,7 @@ const HighestScore = () => {
                         {/* score value */}
                         <span className="col-md-3">10</span>
                     </li>
-                    <li key={0} className="row">
+                    <li key={3} className="row">
                         {/* increases by one each time thru loop */}
                         <span className="col-md-2">1</span>
                         {/* player name */}
