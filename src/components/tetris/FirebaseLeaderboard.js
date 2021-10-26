@@ -15,6 +15,7 @@ export const addScoreonLeaderBoard = async(score)=>{
         if(displayName === ""){ displayName = "Anonymouse";}
         const gameScoreData = {score:score,displayName:displayName,userId:userId,timestamp:serverTimestamp()}
         await addDoc(collection(db,`forum/${userId}/personalScore`),gameScoreData);
+        // set score for individual game point for specific user
         await setDoc(doc(db,"forum/default/IndividualGamePoint",userId),gameScoreData);
 }
 export const getMyScoreList = async()=>{
@@ -36,12 +37,20 @@ export const getMyScoreList = async()=>{
     return [];
 }
 export const getInvidualGameScore = async()=>{
+    // get document reference for a specific game point for a user
+
     const docRef = collection(db,"forum/default/IndividualGamePoint");
+    // manipulate query to get data from firebase  database restore
     const q = query(docRef,orderBy("score","desc"),limit(50))
+    // get all json document from firebase database restore
+    // pushing query into results so that we are able to use this result in react
     const querySnapshot = await getDocs(q);
+    // react array object to populate the result
     let results = [];
     querySnapshot.forEach((doc)=>{
+        // pushing each record into result array
         results.push(doc.data());
     })
+    // returning the value for react 
     return results;
 }
