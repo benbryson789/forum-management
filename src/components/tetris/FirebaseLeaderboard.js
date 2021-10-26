@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { addDoc,collection,getFirestore,serverTimestamp,query,getDocs,orderBy,limit} from "firebase/firestore";
+import { addDoc,collection,getFirestore,serverTimestamp,query,getDocs,orderBy,limit,setDoc,doc} from "firebase/firestore";
 const auth = getAuth();
 let userId = '';
 let displayName = '';
@@ -9,9 +9,13 @@ onAuthStateChanged(auth,(user=>{
     displayName = user ? user.displayName : '';
 }))
 export const addScoreonLeaderBoard = async(score)=>{
+
+    
 // insert Leaderboard score in Firebase Database document based on userID or for specific user 
+        if(displayName === ""){ displayName = "Anonymouse";}
         const gameScoreData = {score:score,displayName:displayName,userId:userId,timestamp:serverTimestamp()}
         await addDoc(collection(db,`forum/${userId}/personalScore`),gameScoreData);
+        await setDoc(doc(db,"forum/default/IndividualGamePoint",userId),gameScoreData);
 }
 export const getMyScoreList = async()=>{
     if (userId !== ''){
@@ -30,4 +34,14 @@ export const getMyScoreList = async()=>{
     return results;
     }
     return [];
+}
+export const getInvidualGameScore = async()=>{
+    const docRef = collection(db,"forum/default/IndividualGamePoint");
+    const q = query(docRef,orderBy("score","desc"),limit(50))
+    const querySnapshot = await getDocs(q);
+    let results = [];
+    querySnapshot.forEach((doc)=>{
+        results.push(doc.data());
+    })
+    return results;
 }

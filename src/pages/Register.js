@@ -38,7 +38,7 @@ const Register = () => {
                         console.log(newUser)    
                         if(user){
                             // after creating user we are checking login states and updating user display name
-                                await updateProfile(user,{displayName: firstname.value.trim() +" "+lastname.value.trim()})
+                                //await updateProfile(user,{displayName: firstname.value.trim() +" "+lastname.value.trim()})
                             }
                     } ))
                     // if account created succesfull, alert message generated

@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useState,useEffect} from 'react'
+import { getInvidualGameScore } from '../../components/tetris/FirebaseLeaderboard';
 
 const TotalScore = () => {
+    const[gameScoreList,setGameScoreList] = useState([]);
+    useEffect(() => {
+        const getGameScore = async ()=>{
+            const gameScore = await getInvidualGameScore();
+            setGameScoreList(gameScore);
+        }
+        getGameScore();
+    }, [setGameScoreList]);
+    console.log(gameScoreList);
     return (
         <ul className={"tetrisLeaderBoard"}>
-              {/* populated scores list dynamically from the state variable */}
-              {/* when we connect firebase api data we will just put api data in gameScoreList */}
+            
               {/* Table Layout */}
             <li className="row headers">
                   {/* index number */}
@@ -12,30 +21,18 @@ const TotalScore = () => {
                     <span className="col-md-7">Player Name </span>
                     <span className="col-md-3">Score</span>
             </li>
-            <li key={0} className="row">
-                        {/* increases by one each time thru loop */}
-                        <span className="col-md-2">1</span>
-                        {/* player name */}
-                        <span className="col-md-7">Debra</span>
-                        {/* score value */}
-                        <span className="col-md-3">10</span>
+            {gameScoreList.map((data,index)=>(
+
+            
+                <li key={index} className="row">
+                    
+                        <span className="col-md-2">{index+1}</span>
+                    
+                        <span className="col-md-7">{data.displayName}</span>
+                    
+                        <span className="col-md-3">{data.score}</span>
                     </li>
-                    <li key={5} className="row">
-                        {/* increases by one each time thru loop */}
-                        <span className="col-md-2">1</span>
-                        {/* player name */}
-                        <span className="col-md-7">Debra Shelby</span>
-                        {/* score value */}
-                        <span className="col-md-3">10</span>
-                    </li>
-                    <li key={4} className="row">
-                        {/* increases by one each time thru loop */}
-                        <span className="col-md-2">1</span>
-                        {/* player name */}
-                        <span className="col-md-7">Ken</span>
-                        {/* score value */}
-                        <span className="col-md-3">10</span>
-                    </li>    
+                ))}
             </ul>
     )
 }

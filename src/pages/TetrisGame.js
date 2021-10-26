@@ -6,10 +6,15 @@ const TetrisGame = () => {
     return (
         <>
             <Navbar/>
-        
-                <Tetris/>
-             
-            
+            <section className="gamebgcolor">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12">
+                    <Tetris/>
+                    </div>
+                </div>
+            </div>
+            </section>
         </>
     )
 }

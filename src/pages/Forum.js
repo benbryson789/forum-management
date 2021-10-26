@@ -3,13 +3,14 @@
 // getFirestone is database
 // limit, orderBy are query commands
 // query is fetching data from Firebase
-import {collection, getDocs, getFirestore, limit, orderBy, query,deleteDoc,doc } from '@firebase/firestore'
+import {collection, getDocs, getFirestore, limit, orderBy, query,deleteDoc,doc, where } from '@firebase/firestore'
 import React,{useState,useEffect} from 'react'
 import { Link,useHistory } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import SidebarNav from '../components/Sidebar'
+import { useAuthState } from '../firebase'
 
 const Forum = () => {
     const history = useHistory();
@@ -17,6 +18,7 @@ const Forum = () => {
     const monthName = ['Jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec'];
     const[documentIndex,seDocIndex] = useState(-1);
     const[open,setOpen]=useState(false);
+    const {user} = useAuthState();
     const dateShow = (time)=>{
       let date = new Date(time * 1000);
         return date.getDate()+" "+monthName[date.getMonth()]+", "+date.getFullYear();
@@ -32,10 +34,13 @@ const Forum = () => {
     const db = getFirestore();
     useEffect(() => {
         const getForumList = async()=>{
+           let uid = user ? user.uid : '';
+           console.log("uid",uid);
           // collection is firebase table and db is object of database of firebase
             const totalForum = collection(db,"forum/default/discussion");
             // run a query to fetch data from a specific database collecton
-            const q = query(totalForum,orderBy("timestamp","desc"),limit(10));
+            const q = query(totalForum,orderBy("timestamp","desc"),limit(50));
+            
             // after run fetch all  data from generated query
             const itemList = await getDocs(q);
             // declare blank array variable  and then
@@ -64,7 +69,7 @@ const Forum = () => {
         // setForumList is returning data from Firebase
         // db is connecting the system with Firebase system
         // docuementationIndex is rererence current document id
-    }, [setForumList,db,documentIndex])
+    }, [setForumList,db,documentIndex,user])
     //console.log(forumList)
     // deleting the document from firebase
     const confirmDelete = async ()=>{
