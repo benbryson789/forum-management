@@ -555,7 +555,7 @@ position: relative; }
 .dk-footer-form input::-webkit-input-placeholder, .dk-footer-form input::-moz-placeholder, .dk-footer-form input:-ms-input-placeholder, .dk-footer-form input::-ms-input-placeholder, .dk-footer-form input::placeholder {
   color: #dddddd;
   font-size: 14px; }
-.dk-footer-form button[type=submit] {
+.dk-footer-form button {
   position: absolute;
   top: 0;
   right: 0;
@@ -1139,5 +1139,18 @@ ul.tetrisLeaderBoard li label {
   line-height: 36px;
   margin: 2px auto;
 }
+img {
+  max-width: 100%;
+}
 ul.itemlist {font-size: 16px;line-height: 22px;}
 .gamebgcolor{background-color: #0c0b0b;}
+p.emailError {
+  color: #f00;
+  margin-left: 20px;
+  margin-top: 5px;
+}
+p.emailSuccess {
+  color: #fff;
+  margin-left: 20px;
+  margin-top: 5px;
+}

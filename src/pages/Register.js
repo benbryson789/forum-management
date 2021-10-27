@@ -36,9 +36,12 @@ const Register = () => {
                     const newUser = await createUserWithEmailAndPassword(auth,email.value,password.value);
                     onAuthStateChanged(auth,(async (user) =>{
                         console.log(newUser)    
+                        console.log("user",user)
                         if(user){
                             // after creating user we are checking login states and updating user display name
-                                //await updateProfile(user,{displayName: firstname.value.trim() +" "+lastname.value.trim()})
+                                setTimeout(function(){
+                                    updateProfile(user,{displayName: firstname.value.trim() +" "+lastname.value.trim()})
+                            },500)
                             }
                     } ))
                     // if account created succesfull, alert message generated

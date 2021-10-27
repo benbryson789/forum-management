@@ -2,21 +2,26 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { addDoc,collection,getFirestore,serverTimestamp,query,getDocs,orderBy,limit,setDoc,doc} from "firebase/firestore";
 const auth = getAuth();
 let userId = '';
-let displayName = '';
+let userName = '';
 const db = getFirestore();
+// gettng the userid and username from login state based on userlogin and we are passing both
+// variable values  in the learderboard score to show username on list page 
 onAuthStateChanged(auth,(user=>{
     userId = user ? user.uid : '';
-    displayName = user ? user.displayName : '';
+    userName = user ? user.displayName : '';
 }))
 export const addScoreonLeaderBoard = async(score)=>{
 
     
 // insert Leaderboard score in Firebase Database document based on userID or for specific user 
-        if(displayName === ""){ displayName = "Anonymouse";}
-        const gameScoreData = {score:score,displayName:displayName,userId:userId,timestamp:serverTimestamp()}
+// we are checking if the user never enter any name then we are passing anonymous  otherwise we are
+// passing the correct name of the user
+        if(userName === ""){ userName = "Anonymous";}
+        // generating gameScoreData that the user name and gameScoreData 
+        const gameScoreData = {score:score,userName:userName,userId:userId,timestamp:serverTimestamp()}
         await addDoc(collection(db,`forum/${userId}/personalScore`),gameScoreData);
         // set score for individual game point for specific user
-        await setDoc(doc(db,"forum/default/IndividualGamePoint",userId),gameScoreData);
+        await setDoc(doc(db,"forum/default/IndividualGamePoints",userId),gameScoreData);
 }
 export const getMyScoreList = async()=>{
     if (userId !== ''){
@@ -39,7 +44,7 @@ export const getMyScoreList = async()=>{
 export const getInvidualGameScore = async()=>{
     // get document reference for a specific game point for a user
 
-    const docRef = collection(db,"forum/default/IndividualGamePoint");
+    const docRef = collection(db,"forum/default/IndividualGamePoints");
     // manipulate query to get data from firebase  database restore
     const q = query(docRef,orderBy("score","desc"),limit(50))
     // get all json document from firebase database restore

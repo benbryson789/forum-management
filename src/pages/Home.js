@@ -5,7 +5,16 @@ import { Icon } from 'semantic-ui-react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 const Home = () => {
+    // define forumList in useState with default value 1
     const[forumList,setForumList] = useState([]);
+    // when currentPage loads set currentPage 1 in useState with default value 1 and we are changing 1 onclick of
+    // pagination button like 1,2,3,etc so the forum list show the result based on current page
+    const[currentPage,setCurrentPage] =useState(1);
+    // define the toatal number of pages with the default value in useState
+    // by default we have set up one page 
+    const[totalPages,setTotalPages] =useState([1]);
+    // how many records we want to show per page so we have set up 10 records list by default
+    const per_page = 10;
     const monthName = ['Jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec'];
     const dateShow = (time)=>{
         let date = new Date(time * 1000);
@@ -34,12 +43,24 @@ const Home = () => {
                 })
                 // passing array is setForumList state variable
                 setForumList(results);
+                // getting the total number of records from firebase data restore and putting in results array so
+                // we are getting the length of total records from results array 
+                // then we are dividing the results array value from per_page
+                // we got 10 records from firebase 10/per_page (3) 3.2 = 4
+                //math.ceil method rounds the number upwards to the nearest integer number and return the result
+                let totalpage = Math.ceil(results.length / per_page);
+                // we are pushing the number of pages based on generating total page in pages variable
+                let pages = []; for(let i =1 ;i<=totalpage;i++){ pages.push(i);}
+                // we are setting setTotalPages useState function
+                setTotalPages(pages);
+                // set current page one on the load of page 
+                setCurrentPage(1);
                 return results;
         }
         // async function calling get data from Firebasedatabase
         getForumList()
         // dependency variable for useEffect
-    }, [setForumList,db])
+    }, [setForumList,db,setTotalPages,per_page,setCurrentPage])
     // console.log(forumList)
     return (
     <>
@@ -62,7 +83,8 @@ const Home = () => {
           {/* Table forum data from bootsnip and will integrate from firebase */}
           <tbody>
               {/* if both forumList have data then it will work */}
-        {forumList && forumList.map((data,index)=>(
+              {/* the slice is generating the array value based on a specific number like slice(1,20), slice(20,40)*/}
+        {forumList && (forumList.slice((currentPage-1) * per_page, currentPage * per_page)).map((data,index)=>(
             // checking if even or odd and then adding active 
         // if 1 then active then if 0 then blank
         <tr key={index} className={((index+1)%2) === 0 ? '':'active' }>
@@ -84,24 +106,13 @@ const Home = () => {
                     <td colSpan="4">
                         {/* bootsnip pagination code */}
                     <ul className="pagination">
-                        <li className="page-item">
-                            {/* previous arrow */}
-                        <Link className="page-link" to="#/" >
-                            <span>«</span>
-                            <span className="sr-only">Previous</span>
-                        </Link>
-                        </li>
+                        
                         {/* pagination number */}
-                        <li className="page-item active"><Link className="page-link" to="/">1</Link></li>
-                        <li className="page-item"><Link className="page-link" to="/">2</Link></li>
-                        <li className="page-item"><Link className="page-link" to="/">3</Link></li>
-                        <li className="page-item">
-                            {/* forward arrow */}
-                        <Link className="page-link" to="/" >
-                            <span >»</span>
-                            <span className="sr-only">Next</span>
-                        </Link>
-                        </li>
+                        {/* generating the pagination number based on total pages like 1,2,3, etc */}
+                        { totalPages.length >1 && totalPages.map((obj,index)=>(
+                            <li className={(index+1) === currentPage ? "page-item active" : "page-item"} onClick={()=>{setCurrentPage(index+1)}}><span className="page-link">{index+1}</span></li>
+                        ))}
+                        
                     </ul>
                     </td>
                 </tr>

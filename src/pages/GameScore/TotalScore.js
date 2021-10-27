@@ -34,7 +34,7 @@ const TotalScore = () => {
                     {/* index number  */}
                         <span className="col-md-2">{index+1}</span>
                     {/* player name */}
-                        <span className="col-md-7">{data.displayName}</span>
+                        <span className="col-md-7">{data.userName}</span>
                     {/* score of individual user */}
                         <span className="col-md-3">{data.score}</span>
                     </li>
