@@ -7,6 +7,12 @@ import Navbar from '../components/Navbar';
 const Home = () => {
     // define forumList in useState with default value 1
     const[forumList,setForumList] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+
+    const handleSearch = () => {
+        setSearchResult(forumList.filter((forum)=>  forum.title.toLowerCase().includes(searchText.toLocaleLowerCase()) ||  forum.displayName.toLowerCase().includes(searchText.toLocaleLowerCase())));
+    }
     // when currentPage loads set currentPage 1 in useState with default value 1 and we are changing 1 onclick of
     // pagination button like 1,2,3,etc so the forum list show the result based on current page
     const[currentPage,setCurrentPage] =useState(1);
@@ -25,6 +31,8 @@ const Home = () => {
         return date.getDate()+" "+monthName[date.getMonth()]+", "+date.getFullYear() +" "+ date.getHours() +":"+date.getMinutes()+":"+date.getSeconds();
     }
     const db = getFirestore();
+
+    console.log("===searchResult", searchResult)
     useEffect(() => {
         const getForumList = async()=>{
                 const totalForum = collection(db,"forum/default/discussion");
@@ -64,7 +72,13 @@ const Home = () => {
     // console.log(forumList)
     return (
     <>
-    <Navbar/>
+    <Navbar handleSearch={handleSearch} setSearchText={(text) => {
+        setSearchText(text);
+        if(!text){
+            setSearchResult([])
+        }
+
+    }}/>
         <div className="container">
         <div className="row mb50">  
         <div className="col-md-12"><h2>Forum</h2></div>
@@ -84,7 +98,7 @@ const Home = () => {
           <tbody>
               {/* if both forumList have data then it will work */}
               {/* the slice is generating the array value based on a specific number like slice(1,20), slice(20,40)*/}
-        {forumList && (forumList.slice((currentPage-1) * per_page, currentPage * per_page)).map((data,index)=>(
+        {(searchResult.length? searchResult: forumList && forumList.slice((currentPage-1) * per_page, currentPage * per_page) ).map((data,index)=>(
             // checking if even or odd and then adding active 
         // if 1 then active then if 0 then blank
         <tr key={index} className={((index+1)%2) === 0 ? '':'active' }>

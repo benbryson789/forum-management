@@ -3,7 +3,7 @@
 // getFirestone is database
 // limit, orderBy are query commands
 // query is fetching data from Firebase
-import {collection, getDocs, getFirestore, limit, orderBy, query,deleteDoc,doc, where } from '@firebase/firestore'
+import {collection, getDocs, getFirestore, limit, orderBy, query,deleteDoc,doc } from '@firebase/firestore'
 import React,{useState,useEffect} from 'react'
 import { Link,useHistory } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
