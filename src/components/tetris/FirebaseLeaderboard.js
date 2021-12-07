@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { addDoc,collection,getFirestore,serverTimestamp,query,getDocs,orderBy,limit,setDoc,doc} from "firebase/firestore";
+import { addDoc,getDoc,collection,getFirestore,serverTimestamp,query,getDocs,orderBy,limit,setDoc,doc} from "firebase/firestore";
 const auth = getAuth();
 let userId = '';
 let userName = '';
@@ -22,6 +22,17 @@ export const addScoreonLeaderBoard = async(score)=>{
         await addDoc(collection(db,`forum/${userId}/personalScore`),gameScoreData);
         // set score for individual game point for specific user
         await setDoc(doc(db,"forum/default/IndividualGamePoints",userId),gameScoreData);
+
+        //**Leader board highet score for invidual game */
+        const docRef = doc(db,'forum/default/HigherScoreGamePoint',userId);
+        const docSnap = await getDoc(docRef);
+        let highScore = 0;
+        if(docSnap.exists()){
+            highScore = parseInt(docSnap.data().score);
+        }
+        if(score >= highScore){
+            await setDoc(doc(db,"forum/default/HigherScoreGamePoint",userId),gameScoreData);
+        }
 }
 export const getMyScoreList = async()=>{
     if (userId !== ''){
@@ -57,5 +68,15 @@ export const getInvidualGameScore = async()=>{
         results.push(doc.data());
     })
     // returning the value for react 
+    return results;
+}
+export const GetHighestScores = async()=>{
+    const highRef = collection(db,"forum/default/HigherScoreGamePoint");
+    const q = query(highRef,orderBy("score","desc"),limit(50));
+    const querySnapshot = await getDocs(q);
+    let results = [];
+    querySnapshot.forEach((doc)=>{
+        results.push(doc.data());
+    })
     return results;
 }

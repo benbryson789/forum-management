@@ -16,9 +16,9 @@ const Footer = () => {
             setMessage("Please fill correct email!"); setMessageClass("emailError"); return false;
         }
         try {
-            //const docRef = doc(db,"forum/subscriber",email);
-            //const docSnap = await getDoc(docRef);
-           // console.log(docSnap)
+            /*const docRef = doc(db,"forum/subscriber",email);
+            const docSnap = await getDoc(docRef);
+            console.log(docSnap)*/
         
             await addDoc(collection(db,"forum/subscriber",email),{
                 email:email,

@@ -18,6 +18,7 @@ import {AuthContextProvider} from "./firebase";
 import Games from './pages/Games';
 import TetrisGame from './pages/TetrisGame';
 import Leaderboard from './pages/Leaderboard';
+import Subscriber from './pages/Subscriber';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route exact path="/games" component={Games}/>
           <Route exact path="/tetris" component={TetrisGame}/>
           <Route exact path="/leaderboard" component={Leaderboard}/>
+          <Route exact path="/subscriber" component={Subscriber}/>
         </Switch>
     </HashRouter>
     </AuthContextProvider>
