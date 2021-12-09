@@ -22,7 +22,7 @@ const HighestScore = () => {
                     <span className="col-md-3">Score</span>
             </li>
             {gameScoreList && gameScoreList.map((data,index)=>(
-                <li key={0} className="row">
+                <li key={index} className="row">
                         {/* increases by one each time thru loop */}
                         <span className="col-md-2">{index+1}</span>
                         {/* player name */}

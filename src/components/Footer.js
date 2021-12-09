@@ -20,7 +20,7 @@ const Footer = () => {
             const docSnap = await getDoc(docRef);
             console.log(docSnap)*/
         
-            await addDoc(collection(db,"forum/subscriber",email),{
+            await addDoc(collection(db,"forum/default/subscriber"),{
                 email:email,
                 timestamp:serverTimestamp()
             })

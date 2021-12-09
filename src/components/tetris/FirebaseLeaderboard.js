@@ -4,6 +4,7 @@ const auth = getAuth();
 let userId = '';
 let userName = '';
 const db = getFirestore();
+
 // gettng the userid and username from login state based on userlogin and we are passing both
 // variable values  in the learderboard score to show username on list page 
 onAuthStateChanged(auth,(user=>{
@@ -11,8 +12,9 @@ onAuthStateChanged(auth,(user=>{
     userName = user ? user.displayName : '';
 }))
 export const addScoreonLeaderBoard = async(score)=>{
-
-    
+    // getting the current login user details from auth object 
+    userId = auth.currentUser.uid;
+    userName = auth.currentUser.displayName;
 // insert Leaderboard score in Firebase Database document based on userID or for specific user 
 // we are checking if the user never enter any name then we are passing anonymous  otherwise we are
 // passing the correct name of the user
@@ -71,10 +73,28 @@ export const getInvidualGameScore = async()=>{
     return results;
 }
 export const GetHighestScores = async()=>{
+    // get high score for individual games
     const highRef = collection(db,"forum/default/HigherScoreGamePoint");
+    // order by score and set limit of top 50 collection
     const q = query(highRef,orderBy("score","desc"),limit(50));
+    // getting the document collection from firebase
     const querySnapshot = await getDocs(q);
     let results = [];
+    // putting firebase database collection in react array object
+    querySnapshot.forEach((doc)=>{
+        results.push(doc.data());
+    })
+    return results;
+}
+export const getSubscriberList = async()=>{
+    // getting the subscriber user from the Firebase data store
+    const subRef = collection(db,"forum/default/subscriber");
+    // getting by date and set limit of top 50 records
+    const q = query(subRef,orderBy("timestamp","desc"),limit(50));
+    // getting the collection documents from the firebase data store
+    const querySnapshot = await getDocs(q);
+    let results = [];
+    // putting firebase collection in the react data object
     querySnapshot.forEach((doc)=>{
         results.push(doc.data());
     })

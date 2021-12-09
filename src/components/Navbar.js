@@ -8,6 +8,12 @@ const Navbar = ({ handleSearch, setSearchText }) => {
     const {isAuthenticated} = useAuthState();
     const{user} = useAuthState();
     const history = useHistory();
+    const logout = ()=>{
+        // after sign out reloaded the page
+        signOut(getAuth());
+        // reload the page
+        window.location='';
+    }
     return (
         <>
         <div id="flipkart-navbar">
@@ -27,7 +33,7 @@ const Navbar = ({ handleSearch, setSearchText }) => {
                 <li className="upper-links"><Link className="links" to="/leaderboard"><Icon name="clipboard list"/> Leaderboard</Link></li>
                 <li className="upper-links"><Link className="links" to="/profile"><Icon name="user"/>Profile</Link></li>
                 <li className="upper-links"><Link className="links" to="/subscriber"><Icon name="user"/>Subscriber</Link></li>
-                <li className="upper-links"><Link className="links" to="/" onClick={()=>signOut(getAuth())}><Icon name="unlock"/>Logout</Link></li></>
+                <li className="upper-links"><span className="links" onClick={()=>{logout()}}><Icon name="unlock"/>Logout</span></li></>
                 }
             </ul>
             </div>
@@ -67,7 +73,7 @@ const Navbar = ({ handleSearch, setSearchText }) => {
     <Link className="sidelinks" to="/leaderboard"><Icon name="clipboard list"/> Leaderboard</Link>
     <Link className="sidelinks" to="/profile"><Icon name="user"/>Profile</Link>
     <Link className="sidelinks" to="/subscriber"><Icon name="user"/></Link>
-    <Link className="sidelinks" to="/" onClick={()=>signOut(getAuth())}><Icon name="unlock"/>Logout</Link></>
+    <span className="sidelinks" onClick={()=>{logout()}}><Icon name="unlock"/>Logout</span></>
     }
 </div>
 </>

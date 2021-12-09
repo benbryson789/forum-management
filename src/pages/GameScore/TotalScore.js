@@ -30,7 +30,7 @@ const TotalScore = () => {
             {gameScoreList.map((data,index)=>(
 
             
-                <li key={index} className="row">
+                <li key={`su${index}`} className="row">
                     {/* index number  */}
                         <span className="col-md-2">{index+1}</span>
                     {/* player name */}
