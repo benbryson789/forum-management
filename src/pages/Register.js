@@ -40,7 +40,10 @@ const Register = () => {
                         if(user){
                             // after creating user we are checking login states and updating user display name
                                 setTimeout(function(){
-                                    updateProfile(user,{displayName: firstname.value.trim() +" "+lastname.value.trim()})
+                                    updateProfile(user,{displayName: firstname.value.trim() +" "+lastname.value.trim()}).then(res=>{
+                                        history.push("/forum");
+                                    });
+                                    
                             },500)
                             }
                     } ))
@@ -48,7 +51,7 @@ const Register = () => {
                     alert("Successfully created your account");
 
                     // redirects forum to URL
-                    history.push("/forum")
+                   
                     // error message
             }catch(e){
                 // error message created by default by firebase
