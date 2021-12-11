@@ -11,13 +11,13 @@ const Subscriber = () => {
         let date = new Date(time * 1000);
         return date.getDate()+" "+monthName[date.getMonth()]+", "+date.getFullYear() +" "+ date.getHours() +":"+date.getMinutes()+":"+date.getSeconds();
     }
+    const getSubscriberUsers = async()=>{
+        const users = await getSubscriberList();
+        setSubscriberList(users);
+    }
     useEffect(() => {
-        const getSubscriberUsers = async()=>{
-            const users = await getSubscriberList();
-            setSubscriberList(users);
-        }
         getSubscriberUsers();
-    }, [setSubscriberList])
+    }, [getSubscriberUsers])
     return (
     <>
         <Navbar/>
@@ -38,7 +38,7 @@ const Subscriber = () => {
         {subscriberList && subscriberList.map((data,index)=>(
             <li  className="row" key={index}>
             <span className="col-md-2">{index+1}</span>
-            <span className="col-md-5"> {dateTimeShow(data.timestamp.seconds)}</span>
+            <span className="col-md-5"> {data && data.timestamp && data.timestamp.seconds && dateTimeShow(data.timestamp.seconds)}</span>
             <span className="col-md-5">{data.email}</span>
         </li>
         ))}
@@ -47,7 +47,7 @@ const Subscriber = () => {
         </div>
         </div>
         </div>
-        <Footer/> 
+        <Footer getSubscribers={getSubscriberUsers} /> 
     </>
     )
 }

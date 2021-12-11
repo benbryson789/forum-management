@@ -86,7 +86,9 @@ const endGame = ()=>{
     drop()
   }
 
-  const move = ({ keyCode }) => {
+  const move = (event) => {
+    event.preventDefault()
+    const keyCode = event.keyCode
     if (!gameOver) {
       if (keyCode === 37) {
         movePlayer(-1) 

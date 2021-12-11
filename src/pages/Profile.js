@@ -12,13 +12,13 @@ const Profile = () => {
     //Suppose user will fill first name and last name enter in field so we are merging both during the update profile because we have only 1 field
     //in firebase so we are updating combine both but again on dispalying time we are making seperate both value(firstname and lastname) using split() method/function
     const [displayName,setDisplayName] = useState(['','']);
-    console.log(user);
-    console.log(auth);
+    console.log('user', user);
+    console.log('auth test', auth);
     useEffect(() => {
         let name = (auth.currentUser && auth.currentUser.displayName !== null) ? auth.currentUser.displayName.split(" "): " ";
         //let name= ["",""];
         setDisplayName(name);
-    }, [user])
+    }, [user, auth.currentUser])
     const handleSubmit = useCallback(async e => {
             e.preventDefault();
             const{firstname,lastname,email} = e.target.elements;

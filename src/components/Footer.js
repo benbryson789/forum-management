@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import { addDoc, collection, getFirestore, serverTimestamp } from '@firebase/firestore';
 import { Icon } from 'semantic-ui-react';
 import validator from "validator";
-const Footer = () => {
+const Footer = ({ getSubscribers }) => {
     const[email,setEmail] = useState('');
     const[message,setMessage] = useState('');
     const[messageClass,setMessageClass]=useState('');
@@ -26,6 +26,7 @@ const Footer = () => {
             })
             setEmail('');
             setMessage("Successfully subscribe your email!"); setMessageClass("");
+            getSubscribers()
         } catch (error) {
             alert(error.message);
         }
